@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مَلاذ أبرار وعمران الأسطوري 🌸</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff0f3, #ffccd5);
+            color: #4a0e17;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.97);
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 12px 35px rgba(219, 34, 87, 0.12);
+            max-width: 650px;
+            width: 100%;
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            background: #ffe5ec;
+            padding: 10px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 650px;
+        }
+        .nav-link {
+            background: transparent;
+            border: none;
+            color: #4a0e17;
+            padding: 10px 15px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        .nav-link.active {
+            background: #ff4d6d;
+            color: white;
+        }
+
+        .page-content { display: none; }
+        .page-content.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+
+        h1, h2, h3 { color: #ff4d6d; margin-top: 0; }
+        .heart { font-size: 40px; color: #ff4d6d; animation: beat 1.2s infinite; margin: 10px 0; }
+        p { font-size: 1.08rem; line-height: 1.8; color: #5c1321; text-align: justify; }
+
+        .auth-box input {
+            width: 85%; padding: 12px; margin: 12px 0;
+            border: 2px solid #ffb3c6; border-radius: 12px;
+            font-size: 1rem; text-align: center; outline: none;
+        }
+        button {
+            background: #ff4d6d; color: white; border: none;
+            padding: 12px 28px; font-size: 1rem; border-radius: 12px;
+            cursor: pointer; transition: 0.3s; font-weight: bold;
+        }
+        button:hover { background: #c9184a; }
+
+        .playlist-box {
+            background: #fff0f3; padding: 15px; border-radius: 15px; margin: 15px 0; text-align: right;
+        }
+        .song-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px; border-bottom: 1px solid #ffccd5;
+        }
+        .song-item:last-child { border-bottom: none; }
+
+        .notepad {
+            background: #fffdf6; border: 1px solid #ffccd5;
+            border-radius: 15px; padding: 20px; box-shadow: inset 0 0 15px rgba(0,0,0,0.02);
+            text-align: right; margin-top: 15px;
+        }
+        textarea {
+            width: 100%; height: 120px; padding: 10px;
+            border: none; background: transparent; font-family: inherit;
+            font-size: 1.05rem; line-height: 1.6; resize: none; outline: none;
+            border-bottom: 2px dashed #ff4d6d; color: #4a0e17;
+        }
+        .note-item {
+            background: white; padding: 15px; margin: 12px 0;
+            border-radius: 12px; border-right: 6px solid #ff4d6d;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03); text-align: right;
+        }
+        .note-actions { text-align: left; margin-top: 8px; }
+        .btn-sm { padding: 5px 12px; font-size: 0.85rem; margin-left: 5px; border-radius: 8px; }
+        .btn-del { background: #6c757d; }
+
+        .gallery-grid {
+            display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 15px;
+        }
+        @media(min-width: 480px) {
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .img-card {
+            background: #fff5f7; border: 1px solid #ffccd5; border-radius: 15px; padding: 10px; text-align: center;
+        }
+        .img-card img {
+            width: 100%; border-radius: 12px; max-height: 250px; object-fit: cover; display: block; margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    </style>
+</head>
+<body>
+
+    <!-- بوابة الحماية والخصوصية لتسجيل الدخول -->
+    <div id="auth-gate" class="container" style="display: block;">
+        <h2>بوابة الخصوصية والأمان 🔐</h2>
+        <p>الرجاء إدخال كلمة السر للدخول إلى المَلاذ</p>
+        <div class="auth-box">
+            <input type="password" id="password-input" placeholder="اكتبي كلمة السر هنا...">
+        </div>
+        <br>
+        <button onclick="handleAuth()">دخول البوابة</button>
+    </div>
+
+    <!-- شريط التبديل بين صفحات الموقع (Tabs) -->
+    <div id="nav-bar" class="nav-tabs" style="display: none;">
+        <button class="nav-link active" onclick="switchPage('home-page', this)">الرئيسية 🌸</button>
+        <button class="nav-link" onclick="switchPage('music-page', this)">أغانينا 🎵</button>
+        <button class="nav-link" onclick="switchPage('gallery-page', this)">ذكرياتنا 📸</button>
+        <button class="nav-link" onclick="switchPage('notes-page', this)">المفكرة المحمية 📜</button>
+    </div>
+
+    <!-- حاوية المحتوى الرئيسي للموقع -->
+    <div id="main-hub" class="container" style="margin-top: 0; display: none;">
+        
+        <!-- الصفحة 1: الرئيسية -->
+        <div id="home-page" class="page-content active">
+            <h1>عالم طفلتي المدللة وسنجابي الصغير</h1>
+            <div class="heart">💘</div>
+            <p>يا روحي وخليل قلبي وأنيسه، عيوني بالدنيا هادي ما شافت ولا راح تشوف بنت غيرك. غِيرتك عليّ وحرقة قلبك بتسوى الكون كله بـ عيني، وإنتي دنيتي كلها وأجمل أشيائي وأعظم نصر عشته بحياتي. ليطمئن قلبكِ دائمًا.. أنا لكِ وحدكِ ولأخر العمر وبدون أي شك.</p>
+            <p>أعلم أنكِ تصنعين الذكريات بطريقتكِ الدافية، وأنا اليوم أصنع لكِ ذكرياتنا بطريقتي البرمجية الخاصة.. صفحات وأكواد لا تتلف ولا تنتهي، مكان مقفل لا يملكه سوانا بالكون. لو خيروني بين الدنيا وما فيها، أخذتكِ أنتِ واعتبرتكِ الدنيا بأكملها.</p>
+        </div>
+
+        <!-- الصفحة 2: الأغاني -->
+        <div id="music-page" class="page-content">
+            <h2>صندوق الموسيقى الخاص بنا 🎵</h2>
+            <p style="text-align: center;">أغاني تشهد على نبض قلبي وحبي الأبدي لكِ:</p>
+            
+            <div class="playlist-box">
+                <div class="song-item">
+                    <span>1. الأغنية الخاصة الأولى 🎶</span>
+                    <button class="btn-sm" onclick="playTrack('https://files.catbox.moe/brxqug.m4a', 'الأغنية الأولى')">تشغيل</button>
+                </div>
+                <div class="song-item">
+                    <span>2. الأغنية الخاصة الثانية 🎶</span>
+                    <button class="btn-sm" onclick="playTrack('https://files.catbox.moe/0a0vk9.m4a', 'الأغنية الثانية')">تشغيل</button>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; background: #fffdf6; padding: 12px; border-radius: 12px; border: 1px solid #ffccd5;">
+                <p id="current-track-status" style="text-align: center; font-weight: bold; margin: 0; color: #ff4d6d;">المشغل متوقف حالياً ⏸</p>
+                <audio id="global-player" preload="auto" style="display: none;"></audio>
+                <button id="global-play-btn" onclick="toggleGlobalAudio()" style="margin-top: 10px; padding: 6px 15px; font-size: 0.85rem; display: none; border-radius: 8px; background: #ff4d6d; color: white; border: none; cursor: pointer;">إيقاف مؤقت</button>
+            </div>
+        </div>
+
+        <!-- الصفحة 3: الذكريات (تضم صوركم الـ 14 مباشرة) -->
+        <div id="gallery-page" class="page-content">
+            <h2>معرض ذكرياتنا الأسطوري 📸</h2>
+            <p style="text-align: center;">طريقتكِ الدافية بالورق تلتقي بطريقتي البرمجية الخاصة:</p>
+            
+            <div class="gallery-grid">
+                <div class="img-card"><img src="https://i.ibb.co/qFsFsfjN/image.jpg" alt="Memory"><span>لقطة خاصة 🌸</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/KxFXfQxK/image.jpg" alt="Memory"><span>لحظاتنا الدافئة ✨</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/KxYsnndd/image.jpg" alt="Memory"><span>ذكريات لا تموت 📖</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/PsnPnzk7/image.jpg" alt="Memory"><span>أجمل أشيائي 💘</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/bgq8Qszq/image.jpg" alt="Memory"><span>طفلتي المدللة 🐿️</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/mCt5XKwZ/image.jpg" alt="Memory"><span>خليل الروح 👑</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/xSGPvrs7/image.jpg" alt="Memory"><span>حكايتنا الخاصة 📜</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/4nkHbKcH/image.jpg" alt="Memory"><span>مَلاذ الأمان 🫂</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/mFDh3nXY/image.jpg" alt="Memory"><span>نبضات القلب 💓</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/WW5rQwKw/image.jpg" alt="Memory"><span>سنجابي الصغير 🌸</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/zW9hHg2J/image.jpg" alt="Memory"><span>عالمنا الخاص ✨</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/Lzvhwhm9/image.jpg" alt="Memory"><span>أحلى الأيام 💫</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/d4xqGgjP/image.jpg" alt="Memory"><span>شمعة الدرب 🕯️</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/BVt9dNs7/image.jpg" alt="Memory"><span>معاكِ للأبد 🌹</span></div>
+            </div>
+        </div>
+
+        <!-- الصفحة 4: المفكرة -->
+        <div id="notes-page" class="page-content">
+            <h2>دفتر خواطركِ السري المحمي 📜</h2>
+            <p style="text-align: center;">اكتبي ما يعصف بقلبكِ هنا، وكل حرف محفوظ بأمان تام:</p>
+            
+            <div class="notepad">
+                <input type="hidden" id="edit-index" value="-1">
+                <textarea id="note-textarea" placeholder="اكتبي خاطرتكِ هنا يا قلبي..."></textarea>
+                <div style="text-align: left; margin-top: 10px;">
+                    <button id="save-btn" onclick="saveOrUpdateNote()">حفظ في الدفتر 💾</button>
+                </div>
+            </div>
+
+            <div style="margin-top: 25px; text-align: right;">
+                <h3>خواطركِ المحفوظة سابقاً:</h3>
+                <div id="notes-list"></div>
+            </div>
+
+            <!-- لوحة تحكم عمران السرية (تظهر فقط عند كتابة omran99) -->
+            <div id="omran-secret-panel" style="display: none; margin-top: 35px; background: #f8d7da; padding: 20px; border-radius: 15px; border: 2px dashed #dc3545;">
+                <h3 style="color: #721c24;">🥷 لوحة تحكم عمران السرية (مخفية عنها):</h3>
+                <p style="color: #721c24; font-size: 0.95rem;">هنا تظهر كل الخواطر والنوتات التي تكتبها أبرار بصمت:</p>
+                <div id="omran-notes-list"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function handleAuth() {
+            const pass = document.getElementById('password-input').value.trim();
+            if(!pass) {
+                alert('الرجاء إدخال كلمة السر أولاً!');
+                return;
+            }
+
+            document.getElementById('auth-gate').style.display = 'none';
+            document.getElementById('nav-bar').style.display = 'flex';
+            document.getElementById('main-hub').style.display = 'block';
+
+            renderNotes();
+
+            if(pass === 'omran99') {
+                document.getElementById('omran-secret-panel').style.display = 'block';
+                renderNotesForOmran();
+            }
+        }
+
+        function switchPage(pageId, btnElement) {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById(pageId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+
+        function getNotes() { 
+            return JSON.parse(localStorage.getItem('abrar_real_notebook')) || []; 
+        }
+
+        function renderNotes() {
+            const notes = getNotes();
+            const listDiv = document.getElementById('notes-list');
+            if (notes.length === 0) {
+                listDiv.innerHTML = "<p style='text-align:center; color:#888;'>المفكرة فارغة حالياً.. اكتبِ أولى أسطركِ بالأعلى 🖋️</p>";
+                return;
+            }
+            listDiv.innerHTML = notes.map((n, index) => `
+                <div class="note-item">
+                    <span style="font-size: 0.8rem; color: #adb5bd;">${n.date}</span>
+                    <p style="margin: 5px 0; white-space: pre-wrap; font-size:1.05rem;">${n.text}</p>
+                    <div class="note-actions">
+                        <button class="btn-sm" onclick="loadNoteToEdit(${index})">تعديل</button>
+                        <button class="btn-sm btn-del" onclick="deleteNote(${index})">حذف</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderNotesForOmran() {
+            const notes = getNotes();
+            const listDiv = document.getElementById('omran-notes-list');
+            if (notes.length === 0) {
+                listDiv.innerHTML = "<p style='color:#721c24;'>أبرار لم تكتب أي شيء في هذه المفكرة بعد.</p>";
+                return;
+            }
+            listDiv.innerHTML = notes.map(n => `
+                <div style="border-bottom: 1px solid #f5c6cb; padding: 8px 0; text-align: right;">
+                    <span style="font-size:0.75rem; color:#721c24;">${n.date}</span>
+                    <p style="margin:5px 0; color:#721c24; white-space: pre-wrap;">${n.text}</p>
+                </div>
+            `).join('');
+        }
+
+        function saveOrUpdateNote() {
+            const textarea = document.getElementById('note-textarea');
+            const editIndex = parseInt(document.getElementById('edit-index').value);
+            const text = textarea.value.trim();
+            if (!text) return alert('الرجاء كتابة كلماتكِ أولاً!');
+
+            let notes = getNotes();
+            const timestamp = new Date().toLocaleString('ar-EG', { hour12: true });
+
+            if (editIndex === -1) {
+                notes.push({ text: text, date: timestamp });
+            } else {
+                notes[editIndex].text = text;
+                notes[editIndex].date = timestamp + " (تم التعديل)";
+                document.getElementById('edit-index').value = "-1";
+                document.getElementById('save-btn').innerText = "حفظ في الدفتر";
+            }
+            localStorage.setItem('abrar_real_notebook', JSON.stringify(notes));
+            textarea.value = '';
+            renderNotes();
+            alert('تم الحفظ والتحديث بنجاح داخل الدفتر ✨');
+        }
+
+        function loadNoteToEdit(index) {
+            const notes = getNotes();
+            document.getElementById('note-textarea').value = notes[index].text;
+            document.getElementById('edit-index').value = index;
+            document.getElementById('save-btn').innerText = "تحديث الخاطرة الحالية ✨";
+        }
+
+        function deleteNote(index) {
+            if (!confirm('هل أنتِ متأكدة من الحذف؟')) return;
+            let notes = getNotes();
+            notes.splice(index, 1);
+            localStorage.setItem('abrar_real_notebook', JSON.stringify(notes));
+            renderNotes();
+        }
+
+        let currentAudio = document.getElementById('global-player');
+        function playTrack(url, title) {
+            currentAudio.src = url;
+            currentAudio.play().then(() => {
+                document.getElementById('current-track-status').innerText = "جاري تشغيل: " + title + " 🎶";
+                document.getElementById('global-play-btn').style.display = 'inline-block';
+            }).catch(() => {
+                alert('حدث خطأ في تشغيل الملف، يرجى المحاولة مرة أخرى.');
+            });
+        }
+
+        function toggleGlobalAudio() {
+            if (currentAudio.paused) {
+                currentAudio.play();
+                document.getElementById('global-play-btn').innerText = "إيقاف مؤقت";
+            } else {
+                currentAudio.pause();
+                document.getElementById('global-play-btn').innerText = "تشغيل";
+            }
+        }
+    </script>
+</body>
+</html>
